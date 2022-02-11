@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+    给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+
+    有效字符串需满足：
+    左括号必须用相同类型的右括号闭合。
+    左括号必须以正确的顺序闭合。
+
+    示例 1：
+    输入：s = "()"
+    输出：true
+
+    示例 2：
+    输入：s = "()[]{}"
+    输出：true
+
+    示例 3：
+    输入：s = "(]"
+    输出：false
+
+    示例 4：
+    输入：s = "([)]"
+    输出：false
+
+    示例 5：
+    输入：s = "{[]}"
+    输出：true
+    */
+
+    // 有效括号
+    var isValid = function(s) {
+      let obj = {
+        ')': '(',
+        '}': '{',
+        ']': '['
+      }
+      let find = 1 // 找到的个数
+      let findIndex = -1 // 上次匹配的下标
+      for (let i = 0; i < s.length; i++) {
+        if (s[i] === ')' || s[i] === '}' || s[i] === ']') { // 找到第一个闭合括号
+          let temp = s[i-1] // 假设匹配的括号
+          if (temp === obj[s[i]] && i-1 >= 0)  { // 找到了匹配的， 删除
+            let str1 = s.slice(0, i-1) // 匹配的子串
+            let str2 = s.slice(i+1) // 匹配的子串
+            s = str1 + str2
+            i = 0
+            console.log('s', s)
+          } else {
+            return false
+          }
+        } else {
+          if (i === s.length - 1) {
+            return false
+          }
+        }
+      }
+      return true
+    }
+    // console.log(isValid("(([]){})"))
+    // console.log(isValid("{}{}()[]"))
+    console.log(isValid("([]){")) // 内嵌+相邻
+
+    var mySqrt = function(x) {
+   let sqr = [4,9,16,25,36,49,64,81]
+   let nums = [2,3,4,5,6,7,8,9]
+   let length = sqr.length
+   let result = 1
+   for (let i = 0; i < length; i++) {
+      if (x >= sqr[i]) {
+        let lint = x / sqr[i]
+        if ( lint % 1 === 0 ) {
+          result = result * nums[i] * mySqrt(Math.floor(lint))
+        }
+      } else {
+        return result
+      }
+   }
+
+}
+console.log(mySqrt(4))
+  </script>
+</body>
+</html>
