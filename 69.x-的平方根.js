@@ -10,22 +10,25 @@
  * @return {number}
  */
  var mySqrt = function(x) {
-   if (!x) return x
-   let sqr = [4,9,16,25,36,49,64,81]
-   let nums = [2,3,4,5,6,7,8,9]
-   let length = sqr.length
-   let result = 1
-   for (let i = 0; i < length; i++) {
-    if (x >= sqr[i]) {
-      let lint = x / sqr[i]
-      if ( lint % 1 === 0 ) {
-        result = result * nums[i] * mySqrt(Math.floor(lint))
-      }
-    } else {
-      return result
+  if (!x) return x
+  let mid = Math.floor(x / 2)  
+  let left = 1
+  let right = x
+   while (mid < x) {
+     let result = mid * mid
+     if (left === mid || right === mid ||  left >= right ) {
+      return left
     }
+     if (result === x) {
+       return mid
+     } else if (result > x ) {
+       right = mid 
+     } else if (result < x) {
+       left = mid
+     }
+     mid = Math.floor((right + left) / 2)
+   }
+   return left
  }
-
-}
 // @lc code=end
 

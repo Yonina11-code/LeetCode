@@ -56,16 +56,12 @@
     }
     console.log(isEqual('0.7', '0.8'))
 
-var removeDuplicates = function(nums) {
-  for (let i = 1; i < nums.length; i++) {
-    if (nums[i] === nums[i-1]) {
-      nums.splice(i, 1)
-      i--
-    }
-  }
-  return nums
+
+var climbStairs = function(n) {
+    if (n === 1 || n === 2 || n === 3) return n
+    return climbStairs(n-1) + climbStairs(n-2)
 };
-console.log(removeDuplicates([1,1,2]))
+  console.log(climbStairs(4))
   /**
    * 1、
    *
