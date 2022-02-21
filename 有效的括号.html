@@ -69,24 +69,24 @@
     // console.log(isValid("{}{}()[]"))
     console.log(isValid("([]){")) // 内嵌+相邻
 
-    var mySqrt = function(x) {
-   let sqr = [4,9,16,25,36,49,64,81]
-   let nums = [2,3,4,5,6,7,8,9]
-   let length = sqr.length
-   let result = 1
-   for (let i = 0; i < length; i++) {
-      if (x >= sqr[i]) {
-        let lint = x / sqr[i]
-        if ( lint % 1 === 0 ) {
-          result = result * nums[i] * mySqrt(Math.floor(lint))
-        }
-      } else {
-        return result
-      }
-   }
-
-}
-console.log(mySqrt(4))
+ var merge = function(nums1, m, nums2, n) {
+  let j = 0
+  for (let i = 0; i < nums1.length; i++) {
+    if (j === nums2.length && nums2[j] === undefined && (i !== 0 && nums1[i] === 0)) break
+    if (nums2[j] <= nums1[i]) {
+      nums1.splice(i, 1, nums2[j], nums1[i])
+      j++
+    }
+  }
+  if (j !== nums2.length) {
+    let rest = nums2.splice(j, nums2.length - j)
+    nums1.splice(m+j, n, ...rest)
+  } else if (nums1.length > m+n) {
+    nums1.splice(m+n, nums1.length - m+n)
+  }
+  return nums1
+};
+console.log(merge([-1,0,0,3,3,3,0,0,0], 6, [1,2,2], 3))
   </script>
 </body>
 </html>
