@@ -18,13 +18,12 @@
  * @return {TreeNode}
  */
 var sortedArrayToBST = function(nums) {
-  let left, right = null
-  let tree = new TreeNode()
-  for (let i = 0; i < nums.length; i++) {
-    if (!i) {
-      tree.val = nums[i]
-    }
-  }
+  if (!nums.length) return null
+  if (nums.length === 1) return new TreeNode(nums[0])
+  if (nums.length === 2) return new TreeNode(nums[1], new TreeNode(nums[0]))
+  if (nums.length === 3) return new TreeNode(nums[1], new TreeNode(nums[0]), new TreeNode(nums[2]))
+  let mid = Math.floor(nums.length / 2)
+  return new TreeNode(nums[mid], sortedArrayToBST(nums.slice(0, mid)), sortedArrayToBST(nums.slice(mid+1)))
 };
 // @lc code=end
 
