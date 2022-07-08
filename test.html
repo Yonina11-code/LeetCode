@@ -7,23 +7,30 @@
   <title>Document</title>
 </head>
 <body>
-  <script>
-    var minDepth = function(root) {
-    let leftnum = 0
-    let rightnum = 0
-    return function subRoots(subRoot) {
-      if (!(subRoot.left|| subRoot.right)) return Math.max(leftnum, rightnum)
-      if (subRoot.left) {
-        leftnum++
-        subRoots(subRoot.left)
+<script>
+var isValid = function(s) {
+  const obj = {
+    '}': '{',
+    ')': '(',
+    ']': '['
+  }
+  let copyStr = s
+  let result = true
+  for (let i = 0; i < copyStr.length; i++) {
+    console.log('22', copyStr[i])
+    if (/[})\]]/.test(copyStr[i])) {
+      if (s[i -1] === obj[copyStr[i]]) {
+        copyStr = copyStr.slice(i-1, i)
+        i = i - 1
+        console.log('copyStr[i]', copyStr[i])
+      } else {
+        return false
       }
-      if (subRoot.right) {
-        rightnum++
-        subRoots(subRoot.right)
-      }
-    }(root)
-  };
-  console.log('ddd', minDepth([3,9,20]))
+    }
+  }
+  return result
+};
+console.log(isValid('(({}))()'))
   </script>
 </body>
 </html>
