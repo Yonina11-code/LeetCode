@@ -11,12 +11,13 @@
  */
 var maxProfit = function(prices) {
   let result = 0
+  let minP = prices[0]
   for (let i = 1; i < prices.length; i++) {
-    let temp = Math.min(prices[i - 1], prices[i])
-    let tempResult = prices[i] - temp
-    result = Math.max(temp, result)
+    minP = Math.min(minP, prices[i])
+    result = Math.max(result, prices[i] - minP)
   }
   return result
 
 };
+// console.log(maxProfit([6,1,3,2,4,7]))
 // @lc code=end
