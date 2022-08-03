@@ -18,7 +18,12 @@
  * @return {boolean}
  */
 var hasCycle = function(head) {
-    
+  if (!(head && head.next)) return false
+  if (head.tag) {
+    return true
+  }
+  head.tag = true
+  return hasCycle(head.next)
 };
 // @lc code=end
 

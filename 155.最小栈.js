@@ -15,21 +15,21 @@ var MinStack = function() {
  * @return {void}
  */
 MinStack.prototype.push = function(val) {
-  this.arr[this.length] = val
+  this.arr[this.arr.length] = val
 };
 
 /**
  * @return {void}
  */
 MinStack.prototype.pop = function() {
-  this.arr.splice(0, 1)
+  this.arr.pop()
 };
 
 /**
  * @return {number}
  */
 MinStack.prototype.top = function() {
-  return this.arr[0]
+  return this.arr[this.arr.length - 1]
 };
 
 /**
