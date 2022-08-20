@@ -6,48 +6,44 @@
 
 // @lc code=start
 function characterReplacement(s: string, k: number): number {
-  if (!s) return 0
-  let sObj: object = {}
+  if (s.length < 2 || s.length <= k) return s.length
+  let max: number
+  let left: number = 0
+  let right: number = 0
+  let win: object = {}
+  win[s[right]] = 1
   for (let i: number = 0; i < s.length; i++) {
-    let temp: string = s[i]
-    if (sObj[temp]) {
-      sObj[temp].push(i)
-    } else {
-      sObj[temp] = [i]
-    }
-  }
-  let max: number = 0
-  console.log(sObj)
-  Object.keys(sObj).forEach(key => {
-    let count = 1
-    let arr: number[] = sObj[key]
-    let j: number = k
-    for (let i: number = 0; i < arr.length; i++) {
-      if (arr[i] + 1 === arr[i + 1]) { // 连续的
-        count++
-      } else { // 不连续的
-        let num = 1 // 连续可以补几个
-        while (j) {
-          j--
-          if (arr[i] + 1 + num === arr[i + 1]) {
-            count++
-            if (arr[i + 1] + 1 !== arr[i + 2]) {
-                count += j + 1
-            }
-            break
-          } else if (j) {
-            num++
-          }
-        }
-        let isNeed = count !== s.length ? j : 0
-        max = Math.max(max, count + isNeed)
-        count = 1
+    if (right !== i) {
+      right = i
+      if (win[s[right]]) {
+        win[s[right]]++
+      } else {
+        win[s[right]] = 1
       }
     }
-    let isNeed = count !== s.length ? j : 0
-    max = Math.max(max, count + isNeed)
-  })
+    let compare: number[] = Object.values(win)
+    if (compare.length !== 1) {
+      let tempMax: number = Math.max(...compare)
+      let surplus: number = 0 // 当前窗口的值是否已经达到k
+      let flag: boolean = false // 是否已经找到了最大值
+      compare.forEach(item => {
+        if (item === tempMax && !flag) {
+          flag = true
+        } else {
+          surplus += item
+        }
+      })
+      if (surplus > k) {
+        win[s[left]]--
+        left++
+        i--
+      } else {
+        max = Math.max(max, compare.reduce((pre, item) => pre + item))
+      }
+    } else {
+      max = compare[0]
+    }
+  }
   return max
 };
 // @lc code=end
-
