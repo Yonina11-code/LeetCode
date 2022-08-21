@@ -66,7 +66,32 @@
 
 // @lc code=start
 function decodeString(s: string): string {
-
+  let result : string = ''
+  for (let i = 0; i < s.length; i++) {
+      let item: string = s[i]
+      // console.log(/[1-9]/.test(item))
+      if (/[a-z]/.test(item)) {
+      result += item
+      } else if (/[1-9]/.test(item)) {
+          if (s[i + 1] === '[') {
+              for (let j = 0; j < +item; j++) {
+                  result += decodeString(s.substring(i + 2))
+              }
+          } else {
+              let count = item
+              while (/[0-9]/.test(s[i + 1])) {
+                  count += s[i + 1]
+              }
+              for (let j = 0; j < +count; j++) {
+                  result += decodeString(s.substring(i + 2))
+              }
+          }
+      i = s.indexOf(']', i)
+      } else if (item === ']') {
+      return result
+      }
+  }
+  return result
 };
 // @lc code=end
 
