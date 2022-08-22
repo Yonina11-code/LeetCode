@@ -1,32 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-<script>
-var convertToTitle = function(columnNumber) {
-  const AZ = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-  let row = Math.trunc(columnNumber / 26)
-  let col = columnNumber % 26 || 26
-  console.log('row', row, col)
-  let result = AZ[col - 1]
-  while (row >= 26) {
-    row = Math.trunc(row / 26)
-    col = row % 26 || 26
-    console.log('row', row, col)
-    result = AZ[col - 1] + result
-  }
-  if (row > 0) {
-    return `${AZ[row - 1]}` + result
-  } else {
-    return result
-  }
-};
-console.log(convertToTitle('2147483647'))
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function decodeString(s) {
+        if (!s.length) return ''
+        let ss = digui(s)
+        let index = ss[1]++
+        let result = ss[0]
+        while (index !== s.length) {
+          let item = s[index]
+          if (/[a-z]/.test(item)) {
+            result += item
+          }
+          index++
+        }
+        return result
+      }
+      // console.log(decodeString('3[z]2[2[y]pq4[2[jk]e1[f]]]ef'))
+      function digui(s) {
+        let result = ''
+        let index = 0
+        let count = ''
+        while (index < s.length) {
+          let item = s[index]
+          console.log(item)
+          if (/[0-9]/.test(item)) {
+            count += item
+          } else if (item === '[') {
+            let temp = digui(s.substring(index + 1))
+            result += temp[0].repeat(+count || 1)
+            count = ''
+            console.log('index', index)
+            index = s.indexOf(']', index + temp[1]) + 1
+            console.log('result', result, index, s[index], temp, count, s.length)
+            continue
+          } else if (/[a-z]/.test(item)) {
+            result += item
+          } else if (item === ']') {
+            if (count) {
+              result = result.repeat(+count || 1)
+              count = ''
+            } else {
+              return [result, index + 1]
+            }
+          }
+          index++
+        }
+        return [result, index + 1]
+      }
+      console.log(decodeString("2[ab3[cd]]4[xy]"))
+    </script>
+  </body>
 </html>
