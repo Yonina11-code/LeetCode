@@ -20,23 +20,25 @@
  */
 
 function diameterOfBinaryTree(root: TreeNode | null): number {
-    if (!root) return 0
-    let arr: number[] = []
-    if (root.left) {
-      arr.push(diameterOfBinaryTree(root.left) + 1)
-    }
-    if (root.right) {
-      arr.push(diameterOfBinaryTree(root.right) + 1)
-    }
-    if (root.left && root.right) {
-      arr.push(diameterOfBinaryTree(root.left) + diameterOfBinaryTree(root.right))
-    }
+  if (!root) return 0
+  let arr: number[] = []
+  if (root.left) {
+    arr.push(diameterOfBinaryTree(root.left))
+  }
+  if (root.right) {
+    arr.push(diameterOfBinaryTree(root.right))
+  }
+  if (root.left && root.right) {
+    arr.push(deepLength(root.left) + deepLength(root.right) + 2)
+  } else {
+    arr.push(deepLength(root))
+  }
   return Math.max(...arr)
 };
 function deepLength(root: TreeNode | null): number {
   if (!root) return 0
-  let left: number = 1
-  let right: number = 1
+  let left: number = 0
+  let right: number = 0
   if (root.left) left = deepLength(root.left) + 1
   if (root.right) right = deepLength(root.right) + 1
   return Math.max(left, right)
