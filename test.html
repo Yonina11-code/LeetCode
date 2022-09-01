@@ -1,60 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      function decodeString(s) {
-        if (!s.length) return ''
-        let ss = digui(s)
-        let index = ss[1]++
-        let result = ss[0]
-        while (index !== s.length) {
-          let item = s[index]
-          if (/[a-z]/.test(item)) {
-            result += item
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function pacificAtlantic(heights) {
+      if (!heights.length) return []
+      let pArr = new Set()
+      let aArr = new Set()
+      let result = []
+      let rLength = heights.length
+      let lLength = heights[0].length
+      for (let i = 0; i < rLength; i++) {
+          pArr.add(`0-${i}`)
+        for (let j = 0; j < lLength; j++) {
+          if (j === 0) {
+            pArr.add(`${i}-0`)
           }
-          index++
-        }
-        return result
-      }
-      // console.log(decodeString('3[z]2[2[y]pq4[2[jk]e1[f]]]ef'))
-      function digui(s) {
-        let result = ''
-        let index = 0
-        let count = ''
-        while (index < s.length) {
-          let item = s[index]
-          console.log(item)
-          if (/[0-9]/.test(item)) {
-            count += item
-          } else if (item === '[') {
-            let temp = digui(s.substring(index + 1))
-            result += temp[0].repeat(+count || 1)
-            count = ''
-            console.log('index', index)
-            index = s.indexOf(']', index + temp[1]) + 1
-            console.log('result', result, index, s[index], temp, count, s.length)
-            continue
-          } else if (/[a-z]/.test(item)) {
-            result += item
-          } else if (item === ']') {
-            if (count) {
-              result = result.repeat(+count || 1)
-              count = ''
-            } else {
-              return [result, index + 1]
+          let temp = heights[i][j]
+          if ((i > 0 && heights[i - 1][j] <= temp && pArr.has(`${i - 1}-${j}`)) || (j > 0 && heights[i][j - 1] <= temp && pArr.has(`${i}-${j - 1}`))) {
+            pArr.add(`${i}-${j}`)
+            let tempi = i
+            while (tempi > 0 && !pArr.has(`${tempi - 1}-${j}`) && heights[tempi - 1][j] >= heights[tempi][j]) {
+              pArr.add(`${tempi - 1}-${j}`)
+              itempi--
+            }
+            let tempj = j
+            while (tempj > 0 && !pArr.has(`${i}-${tempj - 1}`) && heights[i][tempj - 1] >= heights[i][tempj]) {
+              pArr.add(`${i}-${tempj - 1}`)
+              tempj--
             }
           }
-          index++
         }
-        return [result, index + 1]
       }
-      console.log(decodeString("2[ab3[cd]]4[xy]"))
-    </script>
-  </body>
+      for (let i = rLength - 1; i >= 0; i--) {
+          aArr.add(`${i}-${lLength - 1}`)
+        for (let j = lLength - 1; j >= 0; j--) {
+          if (i === rLength - 1) {
+            aArr.add(`${rLength - 1}-${j}`)
+          }
+          let temp = heights[i][j]
+          if (( i < rLength -1 && heights[i + 1][j] <= temp && aArr.has(`${i + 1}-${j}`)) || (j < lLength -1 && heights[i][j + 1] <= temp && aArr.has(`${i}-${j + 1}`))) {
+            aArr.add(`${i}-${j}`)
+            let tempi = i
+            while (tempi < rLength -1 && heights[tempi + 1][j] >= heights[tempi][j] && !aArr.has(`${tempi + 1}-${j}`)) {
+              aArr.add(`${tempi + 1}-${j}`)
+              tempi++
+            }
+            let tempj = j
+            while (tempj < lLength -1 && heights[i][tempj + 1] >= heights[i][tempj] && !aArr.has(`${i}-${tempj + 1}`)) {
+              aArr.add(`${i}-${tempj+1}`)
+              tempj++
+            }
+          }
+        }
+      }
+      console.log(pArr, aArr)
+      let tempPArr = [...pArr]
+      for (let i = 0; i < tempPArr.length; i++) {
+        let temp = tempPArr[i]
+        if (aArr.has(temp)) {
+          let num = temp.split('-')
+          result.push([+num[0], +num[1]])
+        }
+      }
+      return result
+    }
+    console.log(
+      pacificAtlantic([[1,2,3,4],[12,13,14,5],[11,16,15,6],[10,9,8,7]])
+    )
+  </script>
+</body>
 </html>
