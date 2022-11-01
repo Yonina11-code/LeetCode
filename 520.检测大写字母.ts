@@ -1,12 +1,6 @@
-/*
- * @lc app=leetcode.cn id=520 lang=typescript
- *
- * [520] 检测大写字母
- */
-
-// @lc code=start
 function detectCapitalUse(word: string): boolean {
   let exa: number = 0
+  let big: boolean = false // 全是大写
   if (word[0].charCodeAt(0) < 97 ) {
     exa = 65 // 大写
   } else {
@@ -17,13 +11,13 @@ function detectCapitalUse(word: string): boolean {
       if (word[i].charCodeAt(0) < 97) {
         return false
       }
-    } else {
-      if (word[i].charCodeAt(0) >= 97) {
+    } else { // 首字母大写
+      if (i === 1) {
+        big = word[i].charCodeAt(0) < 97
+      } else if ((word[i].charCodeAt(0) >= 97) && big || (word[i].charCodeAt(0) < 97 && !big)) { 
         return false
       }
     }
   }
   return true
 };
-// @lc code=end
-
