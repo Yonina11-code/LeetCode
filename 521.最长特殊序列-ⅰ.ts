@@ -6,6 +6,11 @@
 
 // @lc code=start
 function findLUSlength(a: string, b: string): number {
+  if (a.length !== b.length) {
+    return Math.max(a.length, b.length)
+  } else if (a.length === b.length && a !== b) {
+    return a.length
+  }
   let result: number = -1
   let temp: number = 0
   let startIndex: number = 0
