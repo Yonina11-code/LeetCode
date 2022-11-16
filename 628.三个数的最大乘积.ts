@@ -7,23 +7,8 @@
 // @lc code=start
 function maximumProduct(nums: number[]): number {
   popoSort(nums)
-  console.log(nums)
-  let result: number[] = []
-  let i: number = 0
-  let temp: number = 1
-  while (i < 3) {
-    temp *= nums[i]
-    i++
-  }
-  if (nums.length > 3) {
-    temp = 1
-    i = nums.length - 4
-    while (i < nums.length) {
-      temp *= nums[i]
-      i++
-    }
-  }
-  return Math.max(...result)
+  let length: number = nums.length
+  return Math.max(nums[0] * nums[1] * nums[length -1], nums[length - 3] * nums[length - 2] * nums[length -1])
 };
 
 function popoSort (nums: number[]) {
