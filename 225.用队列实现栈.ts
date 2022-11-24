@@ -6,6 +6,7 @@
 
 // @lc code=start
 class MyStack {
+  public stack: number[]
     constructor() {
       this.stack = []
     }
