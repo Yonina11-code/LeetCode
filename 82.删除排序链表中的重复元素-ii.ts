@@ -18,29 +18,17 @@
  */
 
  function deleteDuplicates(head: ListNode | null): ListNode | null {
-  if (!head || !head.next) return head
-  let link = head, slow = head, fast = head.next // 1122
-  if (slow.val === fast.val) {
-    while (slow && fast && slow.val === fast.val) {
-      link = fast.next
-      fast = fast.next
-    }
-    slow = fast
-    if (fast && fast.next) fast = fast.next
-  }
-  if (fast) {
-   fast= fast.next
-  }
-  while (fast) {
-    if (slow.next.val === fast.val) {
-      while (fast && slow.next.val === fast.val) {
-        fast = fast.next
+  if (!head || !head.next) return head // 11123
+  let fake = new ListNode(0, head)
+  let link = fake.next
+  while (fake.next && fake.next.next) {
+    if (fake.next.val === fake.next.next.val) {
+      let x = fake.next.val
+      while (x === fake.next.val) {
+        fake.next = fake.next.next
       }
-      slow.next = fast
-      if (fast) fast = fast.next
     } else {
-      slow = slow.next
-      fast = fast.next
+      fake = fake.next
     }
   }
   return link
