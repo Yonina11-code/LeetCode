@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+/*===================
+  样式重置
+===================*/
+html, body, div, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, ul, li, fieldset, form, label, input, legend, table, caption, tbody, tfoot, thead, tr, th, td, textarea, article, aside, audio, canvas, figure, footer, header, mark, menu, nav, section, time, video { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal }
+article, aside, dialog, figure, footer, header, hgroup, nav, section, blockquote { display: block; }
+ul, ol { list-style: none; }
+img { border: 0 none; vertical-align: top; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+strong, em, i { font-style: normal; font-weight: normal; }
+ins { text-decoration: underline; }
+del { text-decoration: line-through; }
+mark { background: none; }
+input::-ms-clear { display: none !important; }
+body { font: 12px/1.5 \5FAE\8F6F\96C5\9ED1, \5B8B\4F53, "Hiragino Sans GB", STHeiti, "WenQuanYi Micro Hei", "Droid Sans Fallback", SimSun, sans-serif; background: #fff; }
+a { text-decoration: none; color: #333; }
+a:hover { text-decoration: underline; }
+
+.box {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	width: 400px;
+	height: 250px;
+	perspective: 400px;
+	transform-style: preserve-3d;
+	transform: translate(-50%, -50%);
+}
+
+.book {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	perspective: 1400px;
+	transform-style: preserve-3d;
+	transform: rotateX(90deg) translateZ(-100px);
+	transform-origin: bottom center;
+}
+
+.page {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 200px;
+	height: 250px;
+	transform-origin: left center;
+	transform-style: preserve-3d;
+	transition: all  3s ease;
+}
+
+.page_front, .page_back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	line-height: 250px;
+	text-align: center;
+	color: #FFF;
+	font-size: 24px;
+	backface-visibility: hidden;
+}
+.page_turning {
+	transform: rotateY(-180deg);
+}
+.page_back {
+	transform: rotateY(180deg);
+}
+
+.page_cover {
+	background: #000;
+}
+
+.page_1 {
+	background: red;
+}
+
+.page_2 {
+	background: blue;
+}
+
+.page_3 {
+	background: yellow;
+}
+
+.button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: 150px;
+	transform: translateX(-50%);
+	padding: 10px 20px;
+	border: 1px solid #000;
+	border-radius: 10px;
+}

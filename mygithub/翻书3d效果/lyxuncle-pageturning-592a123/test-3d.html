@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 先给容器总的位置 */
+    .box {
+      position: absolute;
+      width: 400px;
+      height: 250px;
+      /* 居中对齐 */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transform-style: preserve-3d;
+      perspective: 400px;
+    }
+    .book {
+      width: 100%;
+      height: 100%;
+      /*  像本书一样躺着 */
+      transform: rotateX(90deg) translateZ(-150px);
+      transform-origin: bottom center;
+      transform-style: preserve-3d;
+      perspective: 1400px;
+    }
+    .page {
+      position: absolute;
+      /* // 往右靠一半 */
+      left: 50%;
+      width: 200px;
+      height: 250px;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: all 3s ease;
+    }
+    .page-front, .page_back {
+      /* 不加position 背面会被撑开 */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      line-height: 240px;
+      color: aliceblue;
+      font-size: 24px;
+      backface-visibility: hidden;
+    }
+    .page-cover {
+      background-color: black;
+    }
+    .page-back {
+      transform: rotateY(-180deg);
+    }
+    .page_back {
+      transform: rotateY(180deg);
+    }
+    .page_1 {
+      background-color: coral;
+    }
+    .page-2 {
+      background-color: cornflowerblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="book">
+      <div id="page1" class="page">
+        <div  class="page-front  page-cover">Cover</div>
+        <div class="page_back page_1">1</div>
+      </div>
+      <div class="page">
+        <div class="page-front page-2">2</div>
+      </div>
+    </div>
+    <button id="over">button</button>
+  </div>
+  <script>
+    let page = 0 // 正面
+    let btn = document.getElementById('over')
+    console.log('btn', btn)
+    btn.addEventListener('click', () => {
+      if (page) {
+        document.getElementById('page1').setAttribute('class', 'page')
+        --page
+      } else {
+        document.getElementById('page1').setAttribute('class', 'page page-back')
+        ++page
+      }
+    })
+  </script>
+</body>
+</html>
